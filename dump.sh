@@ -1,2 +1,2 @@
 #!/bin/bash
-parallel-fastq-dump -s $1 --defline-seq '@$sn[_$rn]/$ri' --defline-qual '+$sn[_$rn]/$ri' --split-files --threads 6 
+parallel-fastq-dump -s $1 -O $1 --threads 6 --split-spot -W -I --skip-technical --read-filter pass --gzip
