@@ -1,6 +1,5 @@
 #!/bin/bash
-sort tmp_$1* | uniq > "$1_list"
-grep -A 3  -f "$1_list" "$1_1.fastq" | grep -v "^--" > "$1.1.fq" &
-grep -A 3  -f "$1_list" "$1_2.fastq" | grep -v "^--" > "$1.2.fq" &
-paste - - < "$1_rna.fa" | grep -v -f "$1_list" | tr "\t" "\n" > "$1_unmatched.fa"
+sort $1/*.tmp | uniq > $1/matches
+grep -A 3 -f $1/matches $1/merged.fq | grep -v "^--" > $1/seeds.fq &
+paste - - - - < $1/merged.fq | grep -v -f $1/matches | cut -f 1,2 | tr "\t" "\n" > $1/unmatched.fa
 wait
