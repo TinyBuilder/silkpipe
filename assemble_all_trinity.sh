@@ -1,2 +1,2 @@
 #!/bin/bash
-Trinity --seqType fq --max_memory 10G --left "$1.1.fq" --right "$1.2.fq" --CPU 8 --SS_lib_type FR --no_bowtie --no_normalize_reads --full_cleanup --output "trinity_$2_$1"
+Trinity --seqType fq --max_memory 200G --left "$1/1_seeds.fq.gz" --right "$1/2_seeds.fq.gz" --CPU 32 --SS_lib_type FR --no_bowtie --no_normalize_reads --full_cleanup --output "trinity_$1"
