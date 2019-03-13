@@ -1,3 +1,2 @@
 #!/bin/bash
-tadpole.sh in=$1/merged.fq.gz out=$1/contigs.fa fastawrap=0 overwrite=true
-translate6frames.sh in=$1/contigs.fa out=$1/contig_prots.fa fastawrap=0 frames=3 overwrite=true
+Trinity --seqType fq --max_memory 200G --left "$1/1_seeds.fq.gz" --right "$1/2_seeds.fq.gz" --CPU 32 --SS_lib_type FR --no_bowtie --no_normalize_reads --full_cleanup --output "trinity_$1"
