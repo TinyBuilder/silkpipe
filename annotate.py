@@ -72,6 +72,9 @@ def annotate(result):
                 tag = 'AMPULLATE'
                 tag2 = 'MAJOR'
 
+            if tag == 'PIRIFORM':
+                tag = 'PYRIFORM'
+
             if tag in tag_count:
                 tag_count[tag] += 1
             else:
