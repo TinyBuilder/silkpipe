@@ -15,12 +15,14 @@ with open(dir/'nr_matches.json') as file:
 # Read nucleotide sequences.
 nucleotides = {}
 for rec in SeqIO.parse(dir/'extended.fa', 'fasta'):
-    nucleotides[rec.id] = rec.seq
+    nucleotides[rec.id] = str(rec.seq)
 
 # Read peptide sequences.
 peptides = {}
 for rec in SeqIO.parse(dir/'extended_prots.fa', 'fasta'):
-    peptides[rec.id] = rec.seq
+    peptides[rec.id] = str(rec.seq)
+
+with open('test.log', 'w+') as file: print(peptides, file=file)
 
 # Define acceptable types.
 silk_types = ['AMPULLATE', 'FLAGELLIFORM',
@@ -43,8 +45,8 @@ other = []
 # Annotator function
 def annotate(result):
     title = result['query_title']
-    n_seq = nucleotides[title]
-    p_seq = peptides[title]
+    n_seq = nucleotides[title.split(' ', 1)[0]]
+    p_seq = peptides[title.split(' ', 1)[0]]
     tag_count = {}
 
     # Results packer function
@@ -56,10 +58,12 @@ def annotate(result):
         uncharacterised.append(pack('UNCHARACTERISED'))
         return
 
-    # Go through each hit to extract possible descriptions.
+    hit_count = 0
+    # Go through each hit to extract possible descriptions. Only take first 10 hits.
     for hit in result['hits']:
-        tags = hit['description']['title'].upper().split()
-        for tag in tags:
+        hit_count += 1
+        if hit_count > 10: break
+        for tag in hit['description'][0]['title'].upper().split():
             tag2 = None
             if tag == 'EGG':
                 tag = 'TUBULIFORM'
@@ -99,10 +103,11 @@ def annotate(result):
                 continue
 
     # Default annotation is most common tag.
-    annotation = tag_sorted.keys()[0]
+    annotation = next(iter(tag_sorted))
 
     # Check if silk.
     if silk_type == 'AMPULLATE':
+        if silk_number == None: silk_number = ''
         annotation = ' '.join([silk_subtype, silk_type, silk_number])
         annotation = 'PREDICTED ' + annotation + '-LIKE'
         if silk_subtype == 'MINOR':
@@ -145,35 +150,35 @@ def annotate(result):
     return
 
 
-[annotate(report['report']['results']) for report in blast_output]
+[annotate(report['report']['results']['search']) for report in blast_output]
 
 # Print out to files.
-with open(dir/'uncharacterised.json', 'a+') as file:
+with open(dir/'uncharacterised.json', 'w+') as file:
     print(json.dumps(uncharacterised), file=file)
 
-with open(dir/'masp1.json', 'a+') as file:
+with open(dir/'masp1.json', 'w+') as file:
     print(json.dumps(masp1), file=file)
 
-with open(dir/'masp2.json', 'a+') as file:
+with open(dir/'masp2.json', 'w+') as file:
     print(json.dumps(masp2), file=file)
 
-with open(dir/'minor_ampullate.json', 'a+') as file:
+with open(dir/'minor_ampullate.json', 'w+') as file:
     print(json.dumps(minor), file=file)
 
-with open(dir/'flagelliform.json', 'a+') as file:
+with open(dir/'flagelliform.json', 'w+') as file:
     print(json.dumps(flagelliform), file=file)
 
-with open(dir/'tubuliform.json', 'a+') as file:
+with open(dir/'tubuliform.json', 'w+') as file:
     print(json.dumps(tubuliform), file=file)
 
-with open(dir/'aciniform.json', 'a+') as file:
+with open(dir/'aciniform.json', 'w+') as file:
     print(json.dumps(aciniform), file=file)
 
-with open(dir/'pyriform.json', 'a+') as file:
+with open(dir/'pyriform.json', 'w+') as file:
     print(json.dumps(pyriform), file=file)
 
-with open(dir/'aggregate.json', 'a+') as file:
+with open(dir/'aggregate.json', 'w+') as file:
     print(json.dumps(aggregate), file=file)
 
-with open(dir/'others.json', 'a+') as file:
+with open(dir/'others.json', 'w+') as file:
     print(json.dumps(other), file=file)
