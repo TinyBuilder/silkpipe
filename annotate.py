@@ -107,7 +107,7 @@ def annotate(result):
 
     # Check if silk.
     if silk_type == 'AMPULLATE':
-        if silk_number == None: silk_number = ''
+        if silk_number == None or silk_subtype == 'MINOR': silk_number = ''
         annotation = ' '.join([silk_subtype, silk_type, silk_number])
         annotation = 'PREDICTED ' + annotation + '-LIKE'
         if silk_subtype == 'MINOR':
