@@ -124,7 +124,7 @@ def annotate(result):
 
     elif not silk_type == None:
         annotation = silk_type
-        annotation = 'PREDICTED ' + annotation + '-LIKE'
+        annotation = 'HYPOTHETICAL ' + annotation + '-LIKE'
         if silk_type == 'FLAGELLIFORM':
             flagelliform.append(pack(annotation))
             return
