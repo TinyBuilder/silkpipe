@@ -90,7 +90,7 @@ def annotate(result):
     tag_sorted = {k: v for k, v in sorted(
         tag_count.items(), key=lambda tuple: tuple[1])}
 
-    # Identify tags that say it's silk.
+    # Identify tags that say it's silk. Take only the most commonly occuring tags.
     silk_type = None
     silk_subtype = None
     silk_number = None
@@ -112,7 +112,7 @@ def annotate(result):
     if silk_type == 'AMPULLATE':
         if silk_number == None or silk_subtype == 'MINOR': silk_number = ''
         annotation = ' '.join([silk_subtype, silk_type, silk_number])
-        annotation = 'PREDICTED ' + annotation + '-LIKE'
+        annotation = 'HYPOTHETICAL ' + annotation + '-LIKE'
         if silk_subtype == 'MINOR':
             minor.append(pack(annotation))
             return
@@ -148,7 +148,7 @@ def annotate(result):
             aggregate.append(pack(annotation))
             return
 
-    annotation = 'PREDICTED ' + annotation + '-LIKE'
+    annotation = 'HYPOTHETICAL ' + annotation + '-LIKE'
     other.append(pack(annotation))
     return
 
