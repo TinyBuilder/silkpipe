@@ -7,8 +7,9 @@ scp $1:silkpipe/$2/1.fq.gz $2
 scp $1:silkpipe/$2/2.fq.gz $2
 ./filter_trinity.sh $2
 pigz $2/*_seeds.fq
+pigz $2/unmatched.fa
 scp $2/*_seeds.fq.gz $1:silkpipe/$2
-scp $2/unmatched.fa $1:silkpipe/$2
+scp $2/unmatched.fa.gz $1:silkpipe/$2
 ssh -tt $1 "cd silkpipe; ./part2.sh $2"
 scp $1:silkpipe/$2/*.json $2
 scp $1:silkpipe/$2/log.txt $2
