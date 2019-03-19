@@ -1,6 +1,8 @@
 #!/bin/bash
 ssh -tt $1 "cd silkpipe; ./part1.sh $2"
 mkdir $2
+echo 'Part 1 done, press enter.'
+read -s
 scp $1:silkpipe/$2/*.tmp $2
 scp $1:silkpipe/$2/rna.fa.gz $2
 scp $1:silkpipe/$2/1.fq.gz $2
