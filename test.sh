@@ -17,4 +17,4 @@ scp $2/unmatched.fa.gz $1:silkpipe/$2
 ssh -tt $1 "cd silkpipe; ./part2.sh $2"
 scp $1:silkpipe/$2/*.json $2
 scp $1:silkpipe/$2/log.txt $2
-ssh -tt $1 "rm ncbi/public/sra/*; rm -rf silkpipe/SR*"
+#ssh -tt $1 "rm ncbi/public/sra/*; rm -rf silkpipe/SR*"
