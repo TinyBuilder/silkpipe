@@ -1,13 +1,15 @@
 #!/bin/bash
-ssh -tt $1 "cd silkpipe; ./part1.sh $2"
-mkdir $2
-echo 'Part 1 done, press enter.'
-read -s
-scp $1:silkpipe/$2/*.tmp $2
-scp $1:silkpipe/$2/rna.fa.gz $2
-scp $1:silkpipe/$2/1.fq.gz $2
-scp $1:silkpipe/$2/2.fq.gz $2
-./filter_trinity.sh $2
+#ssh -tt $1 "cd silkpipe; ./part1.sh $2"
+#mkdir $2
+#echo 'Part 1 done, press enter.'
+#read -s
+#scp $1:silkpipe/$2/*.tmp $2
+#scp $1:silkpipe/$2/rna.fa.gz $2
+#scp $1:silkpipe/$2/1.fq.gz $2
+#scp $1:silkpipe/$2/2.fq.gz $2
+#./filter_trinity.sh $2
+#echo 'Filtering done, press enter.'
+#read -s
 pigz $2/*_seeds.fq
 pigz $2/unmatched.fa
 scp $2/*_seeds.fq.gz $1:silkpipe/$2
