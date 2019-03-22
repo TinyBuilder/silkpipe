@@ -7,6 +7,7 @@ reformat.sh in=$1/1.fq.gz in2=$1/2.fq.gz out=$1/rna.fa.gz fastawrap=0 &
 translate6frames.sh in=$1/1.fq.gz in2=$1/2.fq.gz out="$1/prot.fa.gz" fastawrap=0
 wait
 ./search_all.sh $1
+rm $1/prot.fa.gz
 ./filter_trinity.sh $1
 if [ -s $1/matches ]; then
     pigz $1/*_seeds.fq
