@@ -41,4 +41,4 @@ rm $1/*seeds.fq
 rm $1/unmatched.fa.gz
 
 # run blast on the results
-blastx -query $1/extended.fa -db /data/ncbi/db/nr -out $1/nr_matches.json -task blastx-fast -num_threads 32 -evalue 0.0001 -outfmt 15
+blastx -query $1/extended.fa -db /data/ncbi/db/nr -out $1/nr_matches.json -task blastx-fast -word_size 6 -num_threads 32 -evalue 0.0001 -outfmt 15
